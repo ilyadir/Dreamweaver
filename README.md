@@ -22,6 +22,13 @@ This repository contains a minimal Telegram bot that collects a dream report, as
    python -m dreamweaver.main
    ```
 
+If you see an import error mentioning `telegram.Chat`, make sure you do **not** have the legacy
+`telegram` package installed. Remove it and reinstall the pinned dependency:
+```bash
+pip uninstall telegram
+pip install -r requirements.txt
+```
+
 ## Project structure
 - `src/dreamweaver/main.py`: Entrypoint that wires handlers and starts polling.
 - `src/dreamweaver/handlers.py`: Conversation handlers for collecting dreams, clarifications, and generating the response.
