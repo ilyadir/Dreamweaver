@@ -1,17 +1,24 @@
+import importlib.util
 import os
+import sys
+from pathlib import Path
 
-from .handlers import build_conversation_handler
+if __package__ in (None, ""):
+    sys.path.append(str(Path(__file__).resolve().parents[1]))
+    from dreamweaver.handlers import build_conversation_handler
+else:
+    from .handlers import build_conversation_handler
+
+if importlib.util.find_spec("telegram.ext") is None:  # pragma: no cover - import-time validation
+    raise RuntimeError(
+        "Install the python-telegram-bot package (>=20,<21) and remove any conflicting "
+        "'telegram' package: pip uninstall telegram && pip install python-telegram-bot==20.7"
+    )
+
+from telegram.ext import Application
 
 
 def run() -> None:
-    try:
-        from telegram.ext import Application
-    except ImportError as exc:  # pragma: no cover - environment specific
-        raise RuntimeError(
-            "Install the python-telegram-bot package (>=20,<21) and remove any conflicting "
-            "'telegram' package: pip uninstall telegram && pip install python-telegram-bot==20.7"
-        ) from exc
-
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     if not token:
         raise RuntimeError("TELEGRAM_BOT_TOKEN is not set")

@@ -21,6 +21,10 @@ This repository contains a minimal Telegram bot that collects a dream report, as
    ```bash
    python -m dreamweaver.main
    ```
+   You can also run the file directly from the repo root if you prefer:
+   ```bash
+   PYTHONPATH=src python src/dreamweaver/main.py
+   ```
 
 If you see an import error mentioning `telegram.Chat`, make sure you do **not** have the legacy
 `telegram` package installed. Remove it and reinstall the pinned dependency:
